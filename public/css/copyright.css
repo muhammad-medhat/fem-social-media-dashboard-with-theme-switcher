@@ -1,0 +1,13 @@
+footer {
+  text-align: center;
+}
+
+.attribution {
+  /* background-color: red; */
+  font-size: 11px;
+  text-align: center;
+}
+
+.attribution a {
+  color: hsl(228, 45%, 44%);
+}

@@ -1,4 +1,4 @@
-@use '../util' as *;
+@use "../util" as *;
 // https://codepen.io/SaraSoueidan/pen/jpBbrq/?editors=1100
 
 .toggle {
@@ -10,20 +10,23 @@
   label {
     font-size: rem(14);
     font-weight: 700;
+    text-transform: capitalize;
     color: var(--toggle);
+    grid-column: 1/2;
 
-    &[for='dark'] {
+    &[for="mode"] {
       line-height: rem(24);
       margin-right: rem(13);
     }
   }
 
   &__wrapper {
+    grid-column: 2/3;
     position: relative;
     height: rem(24);
   }
 
-  input[type='radio'] {
+  input[type="radio"] {
     margin: 0 rem(-2) 0 rem(-2);
     opacity: 0;
     width: rem(24);

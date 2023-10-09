@@ -15,3 +15,12 @@
 .DS_Store
 design
 style-guide.md
+*copy.*
+node_modules
+
+*light.css
+*dark.css
+style
+*.gitignore
+README-template.md
+script.js
