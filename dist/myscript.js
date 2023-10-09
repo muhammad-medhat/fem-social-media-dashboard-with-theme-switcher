@@ -15,15 +15,37 @@ the last value saved on the local storage is loaded.
 
 var darkButton = document.getElementById("dark");
 var lightButton = document.getElementById("light");
-var setColorMode = function setColorMode() {
-  var mode = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "dark";
-  //document.querySelector("body").classList = mode;
-  setBody();
-  document.getElementById(mode).checked = true;
+var defaultColorMode = "dark";
+
+/**
+ *
+ * functions
+ */
+/**
+ * load and apply theme
+ */
+var setBody = function setBody() {
+  var mode = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultColorMode;
   // debugger;
-  var el = document.querySelector(".header__toggle>label>spam");
-  document.querySelector(".header__toggle>label>spam").innerText = colorModeFromLocalStorage;
+  var body = document.querySelector("body");
+  colorModeFromLocalStorage ? body.classList = mode :
+  //  : (body.classList = defaultColorMode);
+  body.classList = colorModeFromPreferences();
 };
+var setToggleText = function setToggleText() {
+  var mode = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultColorMode;
+  document.querySelector(".header__toggle>label>spam").innerText = mode;
+};
+var setColorMode = function setColorMode() {
+  var mode = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultColorMode;
+  //document.querySelector("body").classList = mode;
+  setBody(mode);
+  document.getElementById(mode).checked = true;
+  setToggleText(mode);
+  // set storage
+  localStorage.setItem("colorMode", mode);
+};
+/**########################################################### */
 var colorModeFromLocalStorage = localStorage.getItem("colorMode");
 var colorModeFromPreferences = function colorModeFromPreferences() {
   return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; // If preference is set or does not match anything (light is default)
@@ -31,28 +53,15 @@ var colorModeFromPreferences = function colorModeFromPreferences() {
 
 var radioButtons = document.querySelectorAll(".toggle__wrapper input");
 radioButtons.forEach(function (inp) {
-  console.log("inp", inp);
   var mode = inp.id;
   inp.addEventListener("click", function () {
-    debugger;
-    setColorMode(inp.id);
-    // document.getElementById(inp.id).checked
-    //   ? setColorMode("dark")
-    //   : setColorMode("light");
+    // debugger;
+    setColorMode(mode);
   });
 });
-/**
- * load and apply theme
- */
-var setBody = function setBody() {
-  var mode = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "dark";
-  // debugger;
-  var body = document.querySelector("body");
-  colorModeFromLocalStorage ? body.classList = colorModeFromLocalStorage : body.classList = colorModeFromPreferences();
-};
 console.log("match", window.matchMedia("(prefers-color-scheme: dark)"));
-console.log("pref", colorModeFromPreferences());
-console.log("storage", colorModeFromLocalStorage);
-debugger;
-colorModeFromLocalStorage ? setColorMode(colorModeFromLocalStorage) : setBody();
+console.log("colorModeFromPreferences ", colorModeFromPreferences());
+console.log("colorModeFromLocalStorage ", colorModeFromLocalStorage);
+// debugger;
+colorModeFromLocalStorage ? setColorMode(colorModeFromLocalStorage) : setColorMode(colorModeFromPreferences());
 //# sourceMappingURL=myscript.js.map

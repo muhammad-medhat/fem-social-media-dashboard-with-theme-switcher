@@ -13,17 +13,35 @@ the last value saved on the local storage is loaded.
 
 const darkButton = document.getElementById("dark");
 const lightButton = document.getElementById("light");
+const defaultColorMode = "dark";
 
-const setColorMode = (mode = "dark") => {
-  //document.querySelector("body").classList = mode;
-  setBody();
-  document.getElementById(mode).checked = true;
+/**
+ *
+ * functions
+ */
+/**
+ * load and apply theme
+ */
+const setBody = (mode = defaultColorMode) => {
   // debugger;
-  const el = document.querySelector(".header__toggle>label>spam");
-  document.querySelector(".header__toggle>label>spam").innerText =
-    colorModeFromLocalStorage;
+  const body = document.querySelector("body");
+  colorModeFromLocalStorage
+    ? (body.classList = mode)
+    : //  : (body.classList = defaultColorMode);
+      (body.classList = colorModeFromPreferences());
 };
-
+const setToggleText = (mode = defaultColorMode) => {
+  document.querySelector(".header__toggle>label>spam").innerText = mode;
+};
+const setColorMode = (mode = defaultColorMode) => {
+  //document.querySelector("body").classList = mode;
+  setBody(mode);
+  document.getElementById(mode).checked = true;
+  setToggleText(mode);
+  // set storage
+  localStorage.setItem("colorMode", mode);
+};
+/**########################################################### */
 const colorModeFromLocalStorage = localStorage.getItem("colorMode");
 const colorModeFromPreferences = () => {
   return window.matchMedia("(prefers-color-scheme: dark)").matches
@@ -32,29 +50,17 @@ const colorModeFromPreferences = () => {
 };
 const radioButtons = document.querySelectorAll(".toggle__wrapper input");
 radioButtons.forEach((inp) => {
-  console.log("inp", inp);
   const mode = inp.id;
   inp.addEventListener("click", () => {
-    debugger;
-    setColorMode(inp.id);
-    // document.getElementById(inp.id).checked
-    //   ? setColorMode("dark")
-    //   : setColorMode("light");
+    // debugger;
+    setColorMode(mode);
   });
 });
-/**
- * load and apply theme
- */
-const setBody = (mode = "dark") => {
-  // debugger;
-  const body = document.querySelector("body");
-  colorModeFromLocalStorage
-    ? (body.classList = colorModeFromLocalStorage)
-    : (body.classList = colorModeFromPreferences());
-};
 
 console.log("match", window.matchMedia("(prefers-color-scheme: dark)"));
-console.log("pref", colorModeFromPreferences());
-console.log("storage", colorModeFromLocalStorage);
-debugger;
-colorModeFromLocalStorage ? setColorMode(colorModeFromLocalStorage) : setBody();
+console.log("colorModeFromPreferences ", colorModeFromPreferences());
+console.log("colorModeFromLocalStorage ", colorModeFromLocalStorage);
+// debugger;
+colorModeFromLocalStorage
+  ? setColorMode(colorModeFromLocalStorage)
+  : setColorMode(colorModeFromPreferences());
