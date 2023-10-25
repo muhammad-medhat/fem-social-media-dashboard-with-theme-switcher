@@ -15,7 +15,7 @@ the last value saved on the local storage is loaded.
 
 var darkButton = document.getElementById("dark");
 var lightButton = document.getElementById("light");
-var defaultColorMode = "dark";
+var defaultColorMode = "light";
 
 /**
  *

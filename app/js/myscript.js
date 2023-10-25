@@ -13,7 +13,7 @@ the last value saved on the local storage is loaded.
 
 const darkButton = document.getElementById("dark");
 const lightButton = document.getElementById("light");
-const defaultColorMode = "dark";
+const defaultColorMode = "light";
 
 /**
  *
